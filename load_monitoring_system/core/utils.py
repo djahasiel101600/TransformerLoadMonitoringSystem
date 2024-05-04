@@ -1,18 +1,15 @@
 import json
 import gspread
-import requests
 
 
-gc = gspread.service_account(filename=r"core\creds\vast-tributary-416405-83f965d6e4a2.json")
+
+gc = gspread.service_account(filename=r"core\creds\secret.json")
 sh = gc.open("Data logging system")
 
 def retrieve(*header):
     
-    # gc = gspread.service_account(filename=r"C:\Users\djaha\Documents\GithubProjects\Unuploaded\gspread-test\vast-tributary-416405-83f965d6e4a2.json")
-
+   
     headers = ['Date', 'Time', 'Voltage A', 'Voltage B', 'Voltage C', 'Current A', 'Current B', 'Current C', 'Apparent Power A (kva)', 'Apparent Power B (kva)', 'Apparent Power C (kva)', 'Percent Transformer Load (PTL)', 'Percent Voltage Imbalance (PVI)', 'Percen Current Imbalance (PCI)']
-
-    # sh = gc.open("Gspread-test")
 
     worksheet_transformer = sh.get_worksheet(1)
 
@@ -83,14 +80,9 @@ def retrieve(*header):
 
 
 def retrieve_all_data():
-    # gc = gspread.service_account(filename=r"core\creds\vast-tributary-416405-83f965d6e4a2.json")
-    # sh = gc.open("Data logging system")
-    
+
     headers = ['Date', 'Time', 'VoltageA', 'VoltageB', 'VoltageC', 'CurrentA', 'CurrentB', 'CurrentC', 'Apparent Power A (kva)', 'Apparent Power B (kva)', 'Apparent Power C (kva)', 'Percent Transformer Load (PTL)', 'Percent Voltage Imbalance (PVI)', 'Percen Current Imbalance (PCI)']
     data = {}
-    # gc = gspread.service_account(filename=r"C:\Users\djaha\Documents\GithubProjects\Unuploaded\gspread-test\vast-tributary-416405-83f965d6e4a2.json")
-
-    # sh = gc.open("Gspread-test")
 
     worksheet_transformer = sh.get_worksheet(1)
 
