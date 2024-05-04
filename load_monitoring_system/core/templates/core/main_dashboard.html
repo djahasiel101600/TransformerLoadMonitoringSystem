@@ -1,0 +1,75 @@
+<!-- --------------------------------------------------------------------------------- -->
+
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Monitoring {% endblock %}
+
+{% block content %}
+
+
+<div class="row justify-content-center mt-3">
+
+    <!-- {% if loadCurveOnly %}
+    <canvas id="TransformerPercentLoading" style="width:100%;max-width:75%;"></canvas>
+    {% elif threePhaseCurrentOnly %}
+    <canvas id="ThreePhaseCurrentGraph" style="width:100%;max-width:75%;"></canvas>
+    {% else %}
+    <div class="col" id="transformerPercentLoadingContainer">
+        <canvas id="TransformerPercentLoading" style="width:100%;max-width:100%;"></canvas>
+    </div>
+    <div class="col" id="threePhaseCurrentGraphContainer">
+        <canvas id="ThreePhaseCurrentGraph" style="width:100%;max-width:100%;"></canvas>
+    </div>
+    {% endif %} -->
+
+    {% if loadCurveOnly %}
+    <div class="bg-light rounded mx-3">
+        <canvas id="ThreePhaseVoltageGraph" style="width:100%;"></canvas>
+        {% elif threePhaseCurrentOnly %}
+        <canvas id="ThreePhaseCurrentGraph" style="width:100%;"></canvas>
+    </div>
+    {% else %}
+    <div class="col bg-light rounded mx-3" id="transformerPercentLoadingContainer">
+        <canvas id="ThreePhaseVoltageGraph" style="width:100%;"></canvas>
+    </div>
+    <div class="col bg-light rounded mx-3" id="threePhaseCurrentGraphContainer">
+        <canvas id="ThreePhaseCurrentGraph" style="width:100%;"></canvas>
+    </div>
+    {% endif %}
+
+</div>
+
+<div id="dataTableDisplay">
+</div>
+
+<script src="{% static 'core/js/table.js' %}"></script>
+<script>
+    $.ajax({
+        url: "/dashboard/retrieve_all/",
+        success: function (data) {
+            var elementID = 'dataTableDisplay';
+            var headingName = "DATA TABLE"
+            var headers = Object.keys(data);
+
+            var tableData = [];
+            headers.forEach(element => {
+                tableData.push(data[element])
+            });
+
+            createTableFromData(headingName, headers, tableData, elementID);
+            $(document).ready(function () {
+                $('#tableChart').DataTable({
+                    searching: true
+                });
+            });
+        }
+
+    });
+    // function updateTable() {
+    //     var table = $('#tableChart').DataTable();
+    // }
+    // updateTable();
+    // setInterval(updateTable, 180000);
+    // createTableFromData(headingName, headers, data, elementID);
+</script>
+{% endblock %}
